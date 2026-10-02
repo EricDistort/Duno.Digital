@@ -46,13 +46,19 @@
             border: 1px solid #c81d25;
             color: #c81d25;
             border-radius: 9999px;
-            padding: 0.5rem 2rem;
+            padding: 0.5rem 1.25rem;
             font-weight: 500;
+            transition: all 0.2s;
         }
         .adcb-tab-inactive {
             color: #4b5563;
-            padding: 0.5rem 2rem;
+            padding: 0.5rem 1.25rem;
             font-weight: 500;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .adcb-tab-inactive:hover {
+            color: #1f2937;
         }
         .adcb-action-btn {
             border: 1px solid #f3f4f6;
@@ -73,158 +79,203 @@
     </style>
 </head>
 <body class="text-gray-800 min-h-screen pb-12">
-    <div class="max-w-md mx-auto pt-8 px-4 space-y-6">
+    <div class="max-w-md md:max-w-7xl mx-auto pt-8 px-4 md:px-8 space-y-6 md:space-y-0 md:grid md:grid-cols-12 md:gap-8 lg:gap-12">
         
-        <!-- Header -->
-        <div class="flex items-center justify-between px-2 mb-2">
-            <button class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            </button>
-            <div class="flex items-center gap-3">
-                <button class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-600">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                </button>
-                <button onclick="document.getElementById('goldAmount').focus()" class="adcb-btn-dark px-4 py-2 text-sm font-medium flex items-center gap-1">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                    New track
-                </button>
-            </div>
-        </div>
+        <div class="md:col-span-5 lg:col-span-4 space-y-6">
 
-        <!-- Input Card (Mimicking Gold Account Card) -->
-        <div class="adcb-card p-6 space-y-4">
-            <div>
-                <h2 class="text-gray-900 font-medium text-lg">Spread Calculator</h2>
-                <p class="text-gray-400 text-sm mt-0.5">Enter live market & bank values</p>
-            </div>
-            
-            <div class="space-y-3 pt-2">
+            <div class="adcb-card p-6 space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Total portfolio (XAU)</label>
-                    <input type="number" id="goldAmount" step="0.001" class="adcb-input font-medium" placeholder="e.g. 6.302">
+                    <h2 class="text-gray-900 font-medium text-lg">Spread Calculator</h2>
+                    <p class="text-gray-400 text-sm mt-0.5">Enter live market & bank values</p>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Market Rate (USD/XAU)</label>
-                    <input type="number" id="xauRate" step="0.01" class="adcb-input font-medium" placeholder="e.g. 4142.00">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">ADCB Offer (AED)</label>
-                    <input type="number" id="adcbOffer" step="0.01" class="adcb-input font-medium" placeholder="e.g. 97711.70">
-                </div>
-            </div>
-
-            <div class="pt-2">
-                <button onclick="addRecord()" class="w-full adcb-btn-dark py-3.5 text-base font-medium flex items-center justify-center gap-2">
-                    Calculate & Track
-                </button>
-            </div>
-        </div>
-
-        <!-- Tabs -->
-        <div class="flex items-center justify-center gap-2 py-2">
-            <div class="w-6 h-1 bg-gray-800 rounded-full mb-4"></div>
-        </div>
-        <div class="flex justify-center mb-2">
-            <div class="bg-white rounded-full p-1 shadow-sm flex inline-flex">
-                <button class="adcb-tab-active text-sm">Overview</button>
-                <button class="adcb-tab-inactive text-sm">Activities</button>
-            </div>
-        </div>
-
-        <!-- Latest Calculation Card (Mimicking Holdings Card) -->
-        <div id="latestCalculation" class="adcb-card p-6 hidden">
-            <h3 class="text-gray-900 font-medium mb-4">Holdings Valuation</h3>
-            
-            <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-full border-2 border-indigo-50 bg-orange-100 text-orange-400 flex items-center justify-center font-bold text-sm tracking-wider">
-                        XAU
+                
+                <div class="space-y-3 pt-2">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Total portfolio (XAU)</label>
+                        <input type="number" id="goldAmount" step="0.001" class="adcb-input font-medium">
                     </div>
                     <div>
-                        <div class="text-gray-900 font-medium">True Value</div>
-                        <div class="text-gray-500 text-sm flex items-center gap-1 mt-0.5" id="calcMarketAed">
-                            AED 0.00
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Market Rate (USD/XAU)</label>
+                        <input type="number" id="xauRate" step="0.01" class="adcb-input font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">ADCB Offer (AED)</label>
+                        <input type="number" id="adcbOffer" step="0.01" class="adcb-input font-medium">
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button onclick="addRecord()" class="w-full adcb-btn-dark py-3.5 text-base font-medium flex items-center justify-center gap-2">
+                        Calculate & Track
+                    </button>
+                </div>
+            </div>
+
+            <div class="md:hidden">
+                <div class="flex items-center justify-center gap-2 py-2">
+                    <div class="w-6 h-1 bg-gray-800 rounded-full mb-4"></div>
+                </div>
+                <div class="flex justify-center mb-2">
+                    <div class="bg-white rounded-full p-1 shadow-sm flex w-full max-w-sm">
+                        <button id="tab-mobile-all" onclick="fetchRecords('all')" class="adcb-tab-active text-sm flex-1">All</button>
+                        <button id="tab-mobile-spread" onclick="fetchRecords('spread')" class="adcb-tab-inactive text-sm flex-1">Spread</button>
+                        <button id="tab-mobile-offer" onclick="fetchRecords('offer')" class="adcb-tab-inactive text-sm flex-1">Offer</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="latestCalculation" class="adcb-card p-6 hidden">
+                <h3 class="text-gray-900 font-medium mb-4">Holdings Valuation</h3>
+                
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full border-2 border-indigo-50 bg-orange-100 text-orange-400 flex items-center justify-center font-bold text-sm tracking-wider">
+                            XAU
+                        </div>
+                        <div>
+                            <div class="text-gray-900 font-medium">True Value</div>
+                            <div class="text-gray-500 text-sm flex items-center gap-1 mt-0.5" id="calcMarketAed">
+                                AED 0.00
+                            </div>
                         </div>
                     </div>
+                    <div class="text-right">
+                        <div class="text-gray-500 text-sm" id="calcXauAmount">XAU 0.00</div>
+                    </div>
                 </div>
-                <div class="text-right">
-                    <div class="text-gray-500 text-sm" id="calcXauAmount">XAU 0.00</div>
-                </div>
-            </div>
 
-            <div class="grid grid-cols-2 gap-3 mb-6">
-                <div class="adcb-action-btn bg-gray-50 border-none justify-start py-3 px-4 rounded-xl flex-col items-start gap-0">
-                    <span class="text-xs text-gray-400 font-normal">ADCB Offer</span>
-                    <span class="text-gray-900 font-medium text-sm mt-1" id="calcAdcbOffer">AED 0.00</span>
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <div class="adcb-action-btn bg-gray-50 border-none justify-start py-3 px-4 rounded-xl flex-col items-start gap-0">
+                        <span class="text-xs text-gray-400 font-normal">ADCB Offer</span>
+                        <span class="text-gray-900 font-medium text-sm mt-1" id="calcAdcbOffer">AED 0.00</span>
+                    </div>
+                    <div class="adcb-action-btn bg-red-50 border-none justify-start py-3 px-4 rounded-xl flex-col items-start gap-0">
+                        <span class="text-xs text-red-400 font-normal">Spread Cut</span>
+                        <span class="text-red-700 font-semibold text-sm mt-1" id="calcSpread">AED 0.00</span>
+                    </div>
                 </div>
-                <div class="adcb-action-btn bg-red-50 border-none justify-start py-3 px-4 rounded-xl flex-col items-start gap-0">
-                    <span class="text-xs text-red-400 font-normal">Spread Cut</span>
-                    <span class="text-red-700 font-semibold text-sm mt-1" id="calcSpread">AED 0.00</span>
-                </div>
-            </div>
-            
-            <div class="bg-gray-50 rounded-xl p-4 text-sm text-gray-600 space-y-2">
-                <div class="flex justify-between">
-                    <span>Spot Rate:</span>
-                    <span class="font-medium text-gray-900" id="calcSpotRate">$0.00</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>Peg Rate:</span>
-                    <span class="font-medium text-gray-900">1 USD = 3.6725 AED</span>
-                </div>
-                <div class="flex justify-between border-t border-gray-200 pt-2 mt-2">
-                    <span>Bank Discount:</span>
-                    <span class="font-medium text-red-600" id="calcPercentage">0.00%</span>
+                
+                <div class="bg-gray-50 rounded-xl p-4 text-sm text-gray-600 space-y-2">
+                    <div class="flex justify-between">
+                        <span>Spot Rate:</span>
+                        <span class="font-medium text-gray-900" id="calcSpotRate">$0.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Peg Rate:</span>
+                        <span class="font-medium text-gray-900">1 USD = 3.6725 AED</span>
+                    </div>
+                    <div class="flex justify-between border-t border-gray-200 pt-2 mt-2">
+                        <span>Bank Discount:</span>
+                        <span class="font-medium text-red-600" id="calcPercentage">0.00%</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- History Menu (Mimicking Service requests) -->
-        <div class="adcb-card overflow-hidden">
-            <div class="p-5 border-b border-gray-100 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="text-red-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+        <div class="md:col-span-7 lg:col-span-8 md:pt-16">
+            <div class="adcb-card overflow-hidden h-full flex flex-col">
+                <div class="p-5 border-b border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="text-red-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-900 font-medium">Tracked Records</h3>
+                            <p class="text-gray-400 text-xs mt-0.5">Historical spread analysis</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-gray-900 font-medium">Tracked Records</h3>
-                        <p class="text-gray-400 text-xs mt-0.5">History of calculated spreads</p>
+                    
+                    <div class="hidden md:flex bg-gray-50 rounded-full p-1 border border-gray-200">
+                        <button id="tab-desktop-all" onclick="fetchRecords('all')" class="adcb-tab-active text-sm">All</button>
+                        <button id="tab-desktop-spread" onclick="fetchRecords('spread')" class="adcb-tab-inactive text-sm">Spread</button>
+                        <button id="tab-desktop-offer" onclick="fetchRecords('offer')" class="adcb-tab-inactive text-sm">Offer</button>
                     </div>
                 </div>
-            </div>
-            <div class="divide-y divide-gray-100" id="recordsList">
-                <!-- Records injected here -->
+
+                <div class="divide-y divide-gray-100 md:hidden flex-1 overflow-y-auto" id="recordsListMobile">
+                </div>
+
+                <div class="hidden md:block overflow-x-auto flex-1">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Holding (XAU)</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spot Rate</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">True Value</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ADCB Offer</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spread Cut</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spread %</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-100" id="recordsListDesktop">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-         const SUPABASE_URL = 'https://pqcsllldgplvksiksskb.supabase.co'; // Replace this
+      const SUPABASE_URL = 'https://pqcsllldgplvksiksskb.supabase.co'; // Replace this
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxY3NsbGxkZ3BsdmtzaWtzc2tiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAyMTgwNTYsImV4cCI6MjA3NTc5NDA1Nn0.p6NDp9A0WvVbc4GTz_gE5VyXLmQRiwIuuOEB5CcpCFc'; // Replace this
     
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const PEG_RATE = 3.6725;
+        let currentSort = 'all';
 
         const formatCurrency = (num) => num.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-        async function fetchRecords() {
-            const { data, error } = await supabaseClient
-                .from('gold_tracker')
-                .select('*')
-                .order('created_at', { ascending: false })
-                .limit(10);
+        function updateTabs(active) {
+            const tabs = ['all', 'spread', 'offer'];
+            tabs.forEach(tab => {
+                const isActive = tab === active;
+                const mobileTab = document.getElementById(`tab-mobile-${tab}`);
+                const desktopTab = document.getElementById(`tab-desktop-${tab}`);
+                
+                const activeClass = 'adcb-tab-active text-sm';
+                const inactiveClass = 'adcb-tab-inactive text-sm';
+                
+                if (mobileTab) {
+                    mobileTab.className = (isActive ? activeClass : inactiveClass) + ' flex-1';
+                }
+                if (desktopTab) {
+                    desktopTab.className = isActive ? activeClass : inactiveClass;
+                }
+            });
+        }
+
+        async function fetchRecords(sortType = currentSort) {
+            currentSort = sortType;
+            updateTabs(sortType);
+
+            let query = supabaseClient.from('gold_tracker').select('*');
+
+            if (sortType === 'all') {
+                query = query.order('created_at', { ascending: false });
+            } else if (sortType === 'spread') {
+                query = query.order('spread_percentage', { ascending: true });
+            } else if (sortType === 'offer') {
+                query = query.order('adcb_offer', { ascending: false });
+            }
+
+            const { data, error } = await query.limit(20);
 
             if (error) {
                 console.error('Error fetching records:', error);
                 return;
             }
 
-            const list = document.getElementById('recordsList');
-            list.innerHTML = '';
+            const mobileList = document.getElementById('recordsListMobile');
+            const desktopList = document.getElementById('recordsListDesktop');
+            
+            mobileList.innerHTML = '';
+            desktopList.innerHTML = '';
 
             data.forEach(record => {
-                const date = new Date(record.created_at).toLocaleDateString('en-AE', { day: 'numeric', month: 'short', year: 'numeric' });
-                const time = new Date(record.created_at).toLocaleTimeString('en-AE', { hour: '2-digit', minute:'2-digit' });
+                const dateObj = new Date(record.created_at);
+                const date = dateObj.toLocaleDateString('en-AE', { day: 'numeric', month: 'short', year: 'numeric' });
+                const time = dateObj.toLocaleTimeString('en-AE', { hour: '2-digit', minute:'2-digit' });
                 
                 const div = document.createElement('div');
                 div.className = "p-5 hover:bg-gray-50 transition-colors flex items-center justify-between";
@@ -238,7 +289,35 @@
                         <div class="text-gray-400 text-xs mt-1">AED ${formatCurrency(record.adcb_offer)}</div>
                     </div>
                 `;
-                list.appendChild(div);
+                mobileList.appendChild(div);
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition-colors";
+                tr.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">${date}</div>
+                        <div class="text-xs text-gray-400 mt-0.5">${time}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                        ${record.gold_amount}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        $${formatCurrency(record.xau_rate)}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                        AED ${formatCurrency(record.market_value_aed)}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        AED ${formatCurrency(record.adcb_offer)}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-red-600 bg-red-50/30">
+                        AED ${formatCurrency(record.spread_aed)}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-600 bg-red-50/30">
+                        ${record.spread_percentage.toFixed(2)}%
+                    </td>
+                `;
+                desktopList.appendChild(tr);
             });
         }
 
